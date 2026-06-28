@@ -1,0 +1,49 @@
+/* ============================================================
+   Pescaria — estilos base
+   (placeholder — será substituído conforme o prompt do projeto)
+   ============================================================ */
+
+:root {
+  --cor-primaria: #0a6e8a;
+  --cor-secundaria: #f4a72c;
+  --cor-texto: #1a1a1a;
+  --cor-fundo: #f7f9fa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  line-height: 1.6;
+}
+
+.placeholder {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.placeholder h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--cor-primaria);
+}
+
+.placeholder p {
+  max-width: 40ch;
+  color: #555;
+}
