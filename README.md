@@ -1,17 +1,25 @@
-# Pescaria — Página de Vendas (Low Ticket)
+# Manual do Pescador — Página de Vendas (Low Ticket)
 
-Página de vendas para o nicho de **pescaria**, produto **low ticket**.
+Página de vendas para o nicho de **pescaria**, produto **low ticket** (R$37).
+Segue o mesmo padrão técnico/visual das páginas VIS (ex: Missa Explicada):
+HTML/CSS/JS estático, mobile-first, checkout `visplatform.pro/checkout-fast/[slug]`,
+tracking segmentado (Meta Pixel + Utmify + VIS snippet → ViewContent/InitiateCheckout).
+
+> ⚠️ Antes de publicar, preencha os placeholders marcados com `>>> PREENCHER`
+> no `index.html` e as imagens listadas em
+> [public_html/assets/IMAGENS-NECESSARIAS.md](public_html/assets/IMAGENS-NECESSARIAS.md).
 
 ## 📁 Estrutura do projeto
 
 ```
 pescaria/
 ├── public_html/            # 👉 Tudo que vai para o servidor (Hostinger/cPanel)
-│   ├── index.html          # Página principal
+│   ├── index.html          # Página de vendas (todas as seções)
 │   └── assets/
-│       ├── css/            # Estilos
-│       ├── js/             # Scripts
-│       └── img/            # Imagens
+│       ├── styles.css      # Design system (tema pesca)
+│       ├── script.js       # Countdown, FAQ, carrossel, tracking
+│       ├── IMAGENS-NECESSARIAS.md  # Checklist de imagens/valores a preencher
+│       └── (imagens .png/.webp)
 ├── scripts/
 │   └── build-zip.ps1       # Gera o .zip pronto para subir no cPanel
 ├── .gitignore
