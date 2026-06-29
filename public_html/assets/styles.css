@@ -137,50 +137,105 @@ a {
    ========================================================================== */
 
 .hero {
-    background: linear-gradient(135deg, #0b5e7a 0%, #083f53 100%);
-    padding: var(--space-xl) 0;
+    position: relative;
+    overflow: hidden;
+    /* preenche a viewport menos a barra de urgencia (~48px) */
+    min-height: calc(100vh - 48px);
+    min-height: calc(100svh - 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* titulo no topo, subtitulo+CTA na base */
+    align-items: center;
     text-align: center;
     color: var(--text-white);
+    background: var(--primary-dark); /* fallback enquanto a imagem carrega */
+    padding: 0;
 }
+
+/* Imagem de fundo full-bleed */
+.hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+
+/* Scrim do TOPO (titulo) */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.4) 18%,
+        transparent 40%);
+    z-index: 1;
+}
+
+/* Scrim da BASE (subtitulo + CTA) — forte p/ garantir leitura sobre a agua clara */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        transparent 48%,
+        rgba(0, 0, 0, 0.55) 66%,
+        rgba(0, 0, 0, 0.9) 86%,
+        rgba(0, 0, 0, 0.96) 100%);
+    z-index: 1;
+}
+
+/* Grupos de conteudo por cima do scrim */
+.hero-top,
+.hero-bottom {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 24px;
+}
+
+.hero-top { padding-top: 36px; }       /* titulo no topo */
+.hero-bottom { padding-bottom: 40px; } /* subtitulo + CTA na base */
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: 52px;
+    font-size: clamp(1.7rem, 7vw, 2.6rem);
     font-weight: 900;
     color: var(--text-white);
-    line-height: 1.2;
-    margin-bottom: var(--space-md);
-    padding: 0 var(--space-sm);
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
 .hero-title .highlight {
     color: var(--accent-light);
     display: block;
-    font-size: 34px;
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
     font-weight: 700;
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.92);
-    max-width: 700px;
-    margin: var(--space-md) auto var(--space-lg);
-    padding: 0 var(--space-sm);
-    line-height: 1.7;
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+    color: var(--text-white);
+    max-width: 540px;
+    margin: 16px auto 0;
+    line-height: 1.4;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
 .hero-subtitle strong {
     color: var(--accent-light);
 }
 
-.hero-image {
-    max-width: 620px;
-    margin: 0 auto var(--space-md);
-}
-
-.mockup-img {
-    width: 100%;
+/* CTA do hero: largura cheia (cap 420px), acima da dobra */
+.hero .btn-cta {
+    max-width: 420px;
+    margin-top: var(--space-md);
 }
 
 /* ==========================================================================
@@ -673,7 +728,8 @@ a {
 .bonus-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    /* gap maior nas LINHAS (afasta a fileira de cima da de baixo) que nas colunas */
+    gap: var(--space-lg) var(--space-md);
     max-width: 700px;
     margin: 0 auto;
 }
@@ -841,6 +897,92 @@ a {
     font-weight: 800;
     color: var(--primary);
     letter-spacing: 3px;
+}
+
+/* --- PLANO BASICO (card simples, acima do Premium) --- */
+.plan-basic {
+    max-width: 500px;
+    margin: 0 auto var(--space-lg);
+    background: var(--text-white);
+    border-radius: 16px;
+    padding: var(--space-lg) var(--space-md);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    border: 2px solid var(--foam-dark);
+    text-align: center;
+}
+
+.plan-name {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.5px;
+}
+
+.plan-includes {
+    text-align: left;
+    max-width: 300px;
+    margin: 0 auto var(--space-md);
+}
+
+.plan-includes p {
+    padding: 7px 0;
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.plan-includes p:last-child { border-bottom: none; }
+
+.plan-price { margin-bottom: var(--space-md); }
+
+.plan-price-value {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.plan-price-note {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 2px;
+}
+
+/* Botao do basico: azul (secundario) p/ o laranja do premium se destacar */
+.btn-basic {
+    width: 100%;
+    max-width: 420px;
+    background: var(--primary);
+    color: var(--text-white);
+    box-shadow: 0 4px 15px rgba(11, 94, 122, 0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-basic:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+    }
+}
+
+/* Badge "MAIS ESCOLHIDO" no card Premium */
+.offer-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(242, 140, 28, 0.4);
 }
 
 .offer-card {
@@ -1337,24 +1479,6 @@ a {
         --h2-size: 1.65rem;
     }
 
-    .hero { padding: var(--space-lg) 0; }
-
-    .hero-title {
-        font-size: 36px;
-        line-height: 1.25;
-        padding: 0 var(--space-xs);
-    }
-
-    .hero-title .highlight { font-size: 24px; margin-top: 8px; }
-
-    .hero-subtitle {
-        font-size: 1.1rem;
-        margin: var(--space-sm) auto var(--space-md);
-        padding: 0 var(--space-xs);
-    }
-
-    .hero-image { max-width: 460px; padding: 0 var(--space-sm); }
-
     .carousel-wrapper { max-width: 95%; }
 
     .benefits-grid { grid-template-columns: 1fr; }
@@ -1372,9 +1496,6 @@ a {
 }
 
 @media (max-width: 600px) {
-    .hero-title { font-size: 32px; }
-    .hero-title .highlight { font-size: 22px; }
-    .hero-subtitle { font-size: 1.05rem; }
     .species-item { width: 130px; }
 }
 
@@ -1384,27 +1505,7 @@ a {
         --h2-size: 1.5rem;
     }
 
-    .hero { padding: var(--space-md) 0 var(--space-lg); }
-
-    .hero-title {
-        font-size: 28px;
-        line-height: 1.3;
-        padding: 0;
-        margin-bottom: var(--space-sm);
-    }
-
-    .hero-title .highlight { font-size: 19px; margin-top: 6px; }
-
     .urgency-bar { font-size: 0.85rem; padding: 10px 15px; line-height: 1.4; }
-
-    .hero-image { max-width: 100%; margin: 0 auto var(--space-sm); padding: 0; }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        margin: var(--space-sm) auto var(--space-md);
-        padding: 0;
-        line-height: 1.6;
-    }
 
     .btn-cta, .btn-cta-main, .btn-cta-final, .btn-cta-author {
         max-width: 100%;
@@ -1417,7 +1518,7 @@ a {
 
     .btn { padding: 16px 24px; font-size: 0.95rem; }
 
-    .bonus-grid { gap: 8px; }
+    .bonus-grid { gap: 36px 8px; }
     .bonus-card { padding: 8px; }
     .bonus-image { max-width: 90px; }
     .bonus-card h4 { font-size: 0.85rem; }
